@@ -8,7 +8,7 @@
 
 
 
-<div style="position: fixed; top: 0;right:100px">
+<div style="position: fixed; top: 100px;right:100px">
     <h3>
       nombre: {nombre}
     </h3>

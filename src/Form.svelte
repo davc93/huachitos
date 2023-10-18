@@ -1,9 +1,10 @@
 <script>
 </script>
 
-<div>
-  <h2>Búsqueda</h2>
-  <form action="">
-    <button type="submit">Buscar</button>
+<div class="prose">
+  <h3 class="">Búsqueda</h3>
+
+  <form class="flex" action="">
+    <button class="btn btn-accent" type="submit">Buscar</button>
   </form>
 </div>

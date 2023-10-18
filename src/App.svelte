@@ -16,12 +16,20 @@ import Navbar from "./Navbar.svelte";
     details = event.detail.details;
   }
 </script>
-
-<main on:pointermove={handleMove}>
+<div>
   <Navbar m={{x:m.x,y:m.y}}/>
-  <Form />
-  <ListOfPet on:getDetails={handleShowPet}/>
-  {#if details}
-    <PetDetail {...details} />
-  {/if}
-</main>
+
+  <main class="pt-14" on:pointermove={handleMove}>
+    <section class="container mx-auto">
+      <Form />
+
+    </section>
+    <section class="section">
+
+      <ListOfPet on:getDetails={handleShowPet}/>
+    </section>
+    {#if details}
+      <PetDetail {...details} />
+    {/if}
+  </main>
+</div>
