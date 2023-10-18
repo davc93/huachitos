@@ -11,7 +11,7 @@ class AnimalService {
     if(!response.ok){
       throw new Error(data.message)
     }
-    return data
+    return data.data
   }
   /**
    * @param {number} id 
