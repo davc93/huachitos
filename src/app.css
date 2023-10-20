@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .section{
-  @apply container mx-auto my-16;
+  @apply container mx-auto mb-16;
 }

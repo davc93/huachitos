@@ -1,8 +1,18 @@
 <script>
-    export let m = { x: 0, y: 0 };
-  
+    import { point } from "./store";
+    import { route } from "./routeStore";
+    let pointValue
+    point.subscribe((value)=>{
+      pointValue = value
+    })
+    
+    function changeRoute(event) {
+      event.preventDefault()
+      route.update(()=>event.target.href.split("/").at(-1))
+      
+    }
 </script>
-<nav>
+<nav class="fixed w-full z-10 shadow-lg">
     <div class="navbar bg-base-100">
         <div class="navbar-start">
           <div class="dropdown">
@@ -10,14 +20,13 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
             </label>
             <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li><a>Homepage</a></li>
-              <li><a>Portfolio</a></li>
-              <li><a>About</a></li>
+              <li><a href="/" on:click={changeRoute}>Home</a></li>
+              <li><a href="/register-pet" on:click={changeRoute}>Sube una mascota</a></li>
             </ul>
           </div>
         </div>
         <div class="navbar-center">
-          <a class="btn btn-ghost normal-case text-xl" href="/" on:click={(event)=>{event.preventDefault()}}>Huachitos</a>
+          <a class="btn btn-ghost normal-case text-xl" href="/" on:click={(event)=>{event.preventDefault()}}>{pointValue.x} {pointValue.y}</a>
         </div>
         <div class="navbar-end">
           <button class="btn btn-ghost btn-circle">
