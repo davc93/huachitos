@@ -1,6 +1,9 @@
 <script>
   import { formReducer } from "./formStore";
   import { route } from "./routeStore";
+  import { animalService } from "./services";
+  let error;
+  let isSubmitting;
   let name = "";
   let observation = "";
   let edad = 0;
@@ -18,10 +21,30 @@
     },
   ];
   let comunaSelected;
-  function handleSubmit(event) {
+  async function handleFileChange(event) {
+    const files = event.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      console.log(file);
+    }
+  }
+  async function handleSubmit(event) {
     event.preventDefault();
-    console.log(name);
-    route.update(() => "");
+    isSubmitting = true;
+    try {
+      await animalService.createPet({
+        nombre: name,
+        edad: String(edad),
+        esterilizado: esterilizado === true ? 1 : 0,
+        genero: generoSelected,
+        comuna: comunaSelected,
+      });
+      route.update(() => "");
+    } catch (e) {
+      error = e.message;
+    }
+    isSubmitting = false;
   }
 </script>
 
@@ -104,7 +127,7 @@
         {/each}
       </div>
       <div class="flex justify-between">
-        <button class="btn" on:click={()=>route.update(() => "")}>
+        <button class="btn" on:click={() => route.update(() => "")}>
           Volver
         </button>
         <button class="btn btn-primary" on:click={formReducer.goToSubmit}
@@ -118,6 +141,7 @@
         multiple
         type="file"
         class="file-input file-input-bordered file-input-secondary w-full max-w-xs"
+        on:change={handleFileChange}
       />
       <textarea
         class="textarea textarea-bordered"
@@ -129,11 +153,21 @@
           Volver
         </button>
 
-      <button
-      class="btn btn-primary self-end"
-      type="submit"
-      on:click={handleSubmit}>Enviar</button
-    >
+        <div class="h-12 flex flex-col text-error">
+          {error}
+        </div>
+        <button
+          class="btn btn-primary self-end"
+          type="submit"
+          on:click={handleSubmit}
+          disabled={isSubmitting}
+        >
+          {#if isSubmitting}
+            <span class="loading loading-spinner" />
+          {/if}
+
+          Enviar</button
+        >
       </div>
     </form>
   {/if}
